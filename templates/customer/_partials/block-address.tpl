@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * https://opensource.org/licenses/AFL-3.0
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,27 +19,32 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {block name='address_block_item'}
   <article id="address-{$address.id}" class="address" data-id-address="{$address.id}">
-    <div class="address-body">
-      <h4>{$address.alias}</h4>
-      <address>{$address.formatted nofilter}</address>
-    </div>
+    <header>
+      <h1 class="h4">{$address.alias}</h1>
+    </header>
 
-    {block name='address_block_item_actions'}
-      <div class="address-footer">
-        <a href="{url entity=address id=$address.id}" data-link-action="edit-address">
-          <i class="material-icons">&#xE254;</i>
-          <span>{l s='Update' d='Shop.Theme.Actions'}</span>
-        </a>
-        <a href="{url entity=address id=$address.id params=['delete' => 1, 'token' => $token]}" data-link-action="delete-address">
-          <i class="material-icons">&#xE872;</i>
-          <span>{l s='Delete' d='Shop.Theme.Actions'}</span>
-        </a>
-      </div>
+    <p>{$address.formatted nofilter}</p>
+
+    {block name='address_block_item'}
+      <footer class="actions address-actions">
+        <ul class="action-list">
+          <li>
+            <a href="{url entity=address id=$address.id}" data-link-action="edit-address">
+              {l s='Update' d='Shop.Theme.Actions'}
+            </a>
+          </li>
+          <li>
+            <a href="{url entity=address id=$address.id params=['delete' => 1, 'token' => $token]}" data-link-action="delete-address">
+              {l s='Delete' d='Shop.Theme.Actions'}
+            </a>
+          </li>
+        </ul>
+      </footer>
     {/block}
   </article>
 {/block}

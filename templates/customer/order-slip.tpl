@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * https://opensource.org/licenses/AFL-3.0
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,7 +19,7 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {extends file='customer/page.tpl'}
@@ -29,52 +29,32 @@
 {/block}
 
 {block name='page_content'}
-  <h6>{l s='Credit slips you have received after canceled orders.' d='Shop.Theme.Customeraccount'}</h6>
-  {if $credit_slips}
-    <table class="table table-striped table-bordered hidden-sm-down">
-      <thead class="thead-default">
-        <tr>
-          <th>{l s='Order' d='Shop.Theme.Customeraccount'}</th>
-          <th>{l s='Credit slip' d='Shop.Theme.Customeraccount'}</th>
-          <th>{l s='Date issued' d='Shop.Theme.Customeraccount'}</th>
-          <th>{l s='View credit slip' d='Shop.Theme.Customeraccount'}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {foreach from=$credit_slips item=slip}
+  <h2>{l s='Credit slips you have received after canceled orders.' d='Shop.Theme.Customeraccount'}</h2>
+
+  {block name='credit_slip_table'}
+    {if $credit_slips}
+      <table id="credit-slips">
+        <thead>
           <tr>
-            <td><a href="{$slip.order_url_details}" data-link-action="view-order-details">{$slip.order_reference}</a></td>
-            <td scope="row">{$slip.credit_slip_number}</td>
-            <td>{$slip.credit_slip_date}</td>
-            <td class="text-xs-center">
-              <a href="{$slip.url}"><i class="material-icons">&#xE415;</i></a>
-            </td>
+            <th>{l s='Credit slip' d='Shop.Theme.Customeraccount'}</th>
+            <th>{l s='Order' d='Shop.Theme.Customeraccount'}</th>
+            <th>{l s='Date issued' d='Shop.Theme.Customeraccount'}</th>
+            <th>{l s='View credit slip' d='Shop.Theme.Customeraccount'}</th>
           </tr>
-        {/foreach}
-      </tbody>
-    </table>
-    <div class="credit-slips hidden-md-up">
-      {foreach from=$credit_slips item=slip}
-        <div class="credit-slip">
-          <ul>
-            <li>
-              <strong>{l s='Order' d='Shop.Theme.Customeraccount'}</strong>
-              <a href="{$slip.order_url_details}" data-link-action="view-order-details">{$slip.order_reference}</a>
-            </li>
-            <li>
-              <strong>{l s='Credit slip' d='Shop.Theme.Customeraccount'}</strong>
-              {$slip.credit_slip_number}
-            </li>
-            <li>
-              <strong>{l s='Date issued' d='Shop.Theme.Customeraccount'}</strong>
-              {$slip.credit_slip_date}
-            </li>
-            <li>
-              <a href="{$slip.url}">{l s='View credit slip' d='Shop.Theme.Customeraccount'}</a>
-            </li>
-          </ul>
-        </div>
-      {/foreach}
-    </div>
-  {/if}
+        </thead>
+        <tbody>
+          {foreach from=$credit_slips item=slip}
+            <tr>
+              <td>{$slip.credit_slip_number}</td>
+              <td><a href="{$slip.order_url_details}" data-link-action="view-order-details">{$slip.order_reference}</a></td>
+              <td>{$slip.credit_slip_date}</td>
+              <td><a href="{$slip.url}">{l s='PDF' d='Shop.Theme.Customeraccount'}</a></td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    {/if}
+  {/block}
+
+
 {/block}

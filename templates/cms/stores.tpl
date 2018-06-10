@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
+ * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * https://opensource.org/licenses/AFL-3.0
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,68 +19,57 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {extends file='page.tpl'}
 
 {block name='page_title'}
-  {l s='Our stores' d='Shop.Theme'}
+  {l s='Our stores' d='Shop.Theme.Global'}
 {/block}
 
 {block name='page_content_container'}
   <section id="content" class="page-content page-stores">
 
     {foreach $stores as $store}
-      <article id="store-{$store.id}" class="store-item card">
-        <div class="store-item-container clearfix">
-          <div class="col-md-3 store-picture hidden-sm-down">
-            <img src="{$store.image.bySize.stores_default.url}" alt="{$store.image.legend}" title="{$store.image.legend}">
+      <article id="store-{$store.id}" class="store-item">
+        <header>
+          <h3>{$store.name}</h3>
+        </header>
+
+        <div>
+          <div class="store-picture">
+            <img src="{$store.image.bySize.stores_default.url}" alt="{$store.image.legend}">
           </div>
-          <div class="col-md-5 col-sm-7 col-xs-12 store-description">
-            <h3 class="h3 card-title">{$store.name}</h3>
-            <address>{$store.address.formatted nofilter}</address>
-            {if $store.note || $store.phone || $store.fax || $store.email}
-              <a data-toggle="collapse" href="#about-{$store.id}" aria-expanded="false" aria-controls="about-{$store.id}"><strong>{l s='About and Contact' d='Shop.Theme'}</strong><i class="material-icons">&#xE409;</i></a>
+          <ul>
+            <li>{$store.address.formatted nofilter}</li>
+            {if $store.phone}
+              <li>{l s='Phone:' d='Shop.Theme.Global'} {$store.phone}</li>
             {/if}
-          </div>
-          <div class="col-md-4 col-sm-5 col-xs-12 divide-left">
-            <table>
-              {foreach $store.business_hours as $day}
-              <tr>
-                <th>{$day.day|truncate:4:'.'}</th>
-                <td>
-                  <ul>
-                  {foreach $day.hours as $h}
-                    <li>{$h}</li>
-                  {/foreach}
-                  </ul>
-                </td>
-              </tr>
-              {/foreach}
-            </table>
-          </div>
+            {if $store.fax}
+              <li>{l s='Fax:' d='Shop.Theme.Global'} {$store.fax}</li>
+            {/if}
+            {if $store.email}
+              <li>{l s='Email:' d='Shop.Theme.Global'} {$store.email}</li>
+            {/if}
+          </ul>
+          <p>{l s='Opening hours' d='Shop.Theme.Global'}</p>
+          <table>
+            {foreach $store.business_hours as $day}
+            <tr>
+              <td>{$day.day}</td>
+              <td>
+                <ul>
+                {foreach $day.hours as $h}
+                  <li>{$h}</li>
+                {/foreach}
+                </ul>
+              </td>
+            </tr>
+            {/foreach}
+          </table>
         </div>
-        <footer id="about-{$store.id}" class="collapse">
-          <div class="store-item-footer divide-top">
-            <div class="card-block">
-              {if $store.note}
-                <p class="text-justify">{$store.note}<p>
-              {/if}
-            </div>
-            <ul class="card-block">
-              {if $store.phone}
-                <li><i class="material-icons">&#xE0B0;</i>{$store.phone}</li>
-              {/if}
-              {if $store.fax}
-                <li><i class="material-icons">&#xE8AD;</i>{$store.fax}</li>
-              {/if}
-              {if $store.email}
-                <li><i class="material-icons">&#xE0BE;</i>{$store.email}</li>
-              {/if}
-            </ul>
-          </div>
-        </footer>
+
       </article>
     {/foreach}
 
