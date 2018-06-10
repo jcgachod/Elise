@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,7 +19,7 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
 {extends file='checkout/cart.tpl'}
@@ -28,15 +28,15 @@
   {hook h='displayCrossSellingShoppingCart'}
 {/block}
 
-{block name='cart_overview' append}
-  <a href="{$urls.pages.index}">
-    {l s='Continue shopping' d='Shop.Theme.Actions'}
+{block name='continue_shopping' append}
+  <a class="label" href="{$urls.pages.index}">
+    <i class="material-icons">chevron_left</i>{l s='Continue shopping' d='Shop.Theme.Actions'}
   </a>
 {/block}
 
 {block name='cart_actions'}
-  <div class="checkout">
-    <a href="{$urls.pages.order}">{l s='Checkout' d='Shop.Theme.Actions'}</a>
+  <div class="checkout text-xs-center card-block">
+    <button type="button" class="btn btn-primary disabled" disabled>{l s='Checkout' d='Shop.Theme.Actions'}</button>
   </div>
 {/block}
 

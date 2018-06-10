@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,7 +19,7 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  *}
 <!doctype html>
@@ -33,6 +33,10 @@
 
   <body id="{$page.page_name}" class="{$page.body_classes|classnames}">
 
+    {block name='hook_after_body_opening_tag'}
+      {hook h='displayAfterBodyOpeningTag'}
+    {/block}
+
     <header id="header">
       {block name='header'}
         {include file='checkout/_partials/header.tpl'}
@@ -43,19 +47,30 @@
       {include file='_partials/notifications.tpl'}
     {/block}
 
-    {block name='content'}
-      <section id="content">
+    <section id="wrapper">
+      <div class="container">
 
-        {block name='cart_summary'}
-          {include file='checkout/_partials/cart-summary.tpl' cart=$cart}
-        {/block}
+      {block name='content'}
+        <section id="content">
+          <div class="row">
+            <div class="col-md-8">
+              {block name='cart_summary'}
+                {render file='checkout/checkout-process.tpl' ui=$checkout_process}
+              {/block}
+            </div>
+            <div class="col-md-4">
 
-        {block name='cart_summary'}
-          {render file='checkout/checkout-process.tpl' ui=$checkout_process}
-        {/block}
+              {block name='cart_summary'}
+                {include file='checkout/_partials/cart-summary.tpl' cart = $cart}
+              {/block}
 
-      </section>
-    {/block}
+              {hook h='displayReassurance'}
+            </div>
+          </div>
+        </section>
+      {/block}
+      </div>
+    </section>
 
     <footer id="footer">
       {block name='footer'}
@@ -65,6 +80,10 @@
 
     {block name='javascript_bottom'}
       {include file="_partials/javascript.tpl" javascript=$javascript.bottom}
+    {/block}
+
+    {block name='hook_before_body_closing_tag'}
+      {hook h='displayBeforeBodyClosingTag'}
     {/block}
 
   </body>
