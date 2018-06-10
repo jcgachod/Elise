@@ -1,4 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Allura|Montserrat:100|Rancho');
+
 /*
  * Custom code goes here.
  * A template should always ship with an empty custom.css
  */
+
+#header {
+	color: white;
+}
+
+#header .col-md-10 {
+	position: absolute !important;
+	top: 0;
+	left: 17%;
+}
+
+#header .header-nav {
+	background:green;
+}
+
+#header .header-nav a, #header .header-nav a:visited {
+  color:white!important;
+}
+
+#header .header-nav .blockcart {
+	background: green;
+}
+
+#header .header-nav .blockcart .material-icons {
+	color: white;
+}
+
+#top-menu {
+  font-family:Montserrat;
+}
+
+#header .header-top a[data-depth="0"] {
+	color: green;
+	text-transform: uppercase;
+}
+
+.all-product-link.pull-xs-left.pull-md-right.h4 {
+  background-color:green;
+  padding:1%;
+  color:white;
+}
+
+.footer-container {
+	background: green;
+}
+
+#footer h3, .footer-container li a, #block_myaccount_infos .myaccount-title a, #footer .block-contact, #footer .block-contact .block-contact-title {
+	color:white;
+}
+
+.footer-container .col-md-12 {
+	display:none;
+}
+
+#header .header-nav .top-logo {
+	line-height: 0;
+}
+
+#_desktop_logo {
+	width: 36%;
+	margin-top: 4%;
+}
+
+#header .ui-autocomplete-input {
+	margin-top: -3%;
+}
+
+/*responsive*/
+
+@media screen and (max-device-width: 767px) {  
+
+#header .header-nav {
+	background:white;
+}
+
+}
