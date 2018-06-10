@@ -3,10 +3,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License 3.0 (AFL-3.0)
+ * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * https://opensource.org/licenses/AFL-3.0
+ * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@prestashop.com so we can send you a copy immediately.
@@ -19,70 +19,73 @@
  *
  * @author    PrestaShop SA <contact@prestashop.com>
  * @copyright 2007-2017 PrestaShop SA
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
 var webpack = require('webpack');
+var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var plugins = [];
 
+var production = true;
+
+if (production) {
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  );
+}
+
 plugins.push(
-  new ExtractTextPlugin('../css/theme.css')
+  new ExtractTextPlugin(
+    path.join(
+      '..', 'css', 'theme.css'
+    )
+  )
 );
 
-module.exports = [{
-  // JavaScript
+module.exports = {
   entry: [
-    './js/theme.js',
-    './css/normalize.css',
-    './css/example.less',
-    './css/st/dev.styl',
-    './css/theme.scss'
+    './js/theme.js'
   ],
   output: {
     path: '../assets/js',
     filename: 'theme.js'
   },
   module: {
-    loaders:  [{
+    loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
       loaders: ['babel-loader']
     }, {
       test: /\.scss$/,
       loader: ExtractTextPlugin.extract(
-          "style",
-          "css-loader?sourceMap!postcss!sass-loader?sourceMap"
+        "style",
+        "css?sourceMap!postcss!sass?sourceMap"
       )
     }, {
-      test: /\.styl$/,
-      loader: ExtractTextPlugin.extract(
-          "style",
-          "css-loader?sourceMap!postcss!stylus-loader?sourceMap"
-      )
-    }, {
-      test: /\.less$/,
-      loader: ExtractTextPlugin.extract(
-          "style",
-          "css-loader?sourceMap!postcss!less-loader?sourceMap"
-      )
+      test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+      loader: 'file-loader?name=../css/[hash].[ext]'
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract(
-          'style',
-          'css-loader?sourceMap!postcss-loader'
-      )
-    }, {
-      test: /.(png|woff(2)?|eot|ttf|svg|jpg)(\?[a-z0-9=\.]+)?$/,
-      loader: 'file-loader?name=../css/[hash].[ext]'
+      loader: "style-loader!css-loader!postcss-loader"
     }]
   },
-  externals: {
-    prestashop: 'prestashop'
+  postcss: function() {
+    return [require('postcss-flexibility')];
   },
+  externals: {
+    prestashop: 'prestashop',
+    $: '$',
+    jquery: 'jQuery'
+  },
+  devtool: 'source-map',
   plugins: plugins,
   resolve: {
-    extensions: ['', '.js', '.scss', '.styl', '.less', '.css']
+    extensions: ['', '.js', '.scss']
   }
-}];
+};
